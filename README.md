@@ -4,6 +4,8 @@
 [![License][mit-badge]][mit-url]
 [![Codebeat][codebeat-badge]][codebeat-url]
 
+Create a GraphQL HTTP server with [Kitura](http://www.kitura.io) web framework.
+
 ## Installation
 
 ```swift
@@ -26,9 +28,9 @@ let package = Package(
 - **`rootValue`**: A value to pass as the `rootValue` to the schema's `execute` function from [`Graphiti`](https://github.com/GraphQLSwift/Graphiti).
 - **`contextValue`**: A value to pass as the `contextValue` to the schema's `execute` function from [`Graphiti`](https://github.com/GraphQLSwift/Graphiti). If `context` is not provided, the `request` struct is passed as the context.
 
-### Request Parameters 
+### HTTP Usage
 
-Once installed as a reponder, `GraphQLMiddleware` will accept requests with the parameters:
+Once installed as a middleware at a path, `GraphQLMiddleware` will accept requests with the parameters:
 
 - **`query`**: A string GraphQL document to be executed.
 - **`operationName`**: If the provided query contains multiple named operations, this specifies which operation should be executed. If not provided, a 400 error will be returned if the query contains multiple named operations.
@@ -37,7 +39,7 @@ Once installed as a reponder, `GraphQLMiddleware` will accept requests with the 
 
 
 ### Example
-Example using [Kitura](http://www.kitura.io)
+
 
 ```swift
 import Graphiti
