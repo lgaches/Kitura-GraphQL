@@ -20,6 +20,22 @@ let package = Package(
 
 ### Configuration
 
+`GraphQLMiddleware` has the following parameters:
+- **`schema`**: A `Schema` instance from [`Graphiti`](https://github.com/GraphQLSwift/Graphiti). A `Schema` *must* be provided.
+- **`showGraphiQL`**: If `true`, presentss [GraphiQL](https://github.com/graphql/graphiql) when the GraphQL endpoint is loaded in a browser. We recommend that you set `showGraphiQL` to `true` when your app is in development because it's quite useful. You may or may not want it in production. 
+- **`rootValue`**: A value to pass as the `rootValue` to the schema's `execute` function from [`Graphiti`](https://github.com/GraphQLSwift/Graphiti).
+- **`contextValue`**: A value to pass as the `contextValue` to the schema's `execute` function from [`Graphiti`](https://github.com/GraphQLSwift/Graphiti). If `context` is not provided, the `request` struct is passed as the context.
+
+### Request Parameters 
+
+Once installed as a reponder, `GraphQLMiddleware` will accept requests with the parameters:
+
+- **`query`**: A string GraphQL document to be executed.
+- **`operationName`**: If the provided query contains multiple named operations, this specifies which operation should be executed. If not provided, a 400 error will be returned if the query contains multiple named operations.
+- **`variables`**: The runtime values to use for any GraphQL query variables as a JSON object.
+- **`raw`**: If the `showGraphiQL` option is enabled and the raw parameter is provided raw JSON will always be returned instead of GraphiQL even when loaded from a browser.
+
+
 ### Example
 Example using [Kitura](http://www.kitura.io)
 
