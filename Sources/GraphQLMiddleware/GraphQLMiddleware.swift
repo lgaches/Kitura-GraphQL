@@ -118,7 +118,7 @@ public class GraphQLMiddleware<Root>: RouterMiddleware {
                 
                 let query = json["query"].string
                 let operationName = json["operationName"].string
-                let variables = parseVariables(varsString: json["variables"].string)
+                let variables = parseVariables(varsString: json["variables"].rawString())
 
                 return GraphQLRequestParams(query: query, operationName: operationName, variables: variables)
             } catch {
