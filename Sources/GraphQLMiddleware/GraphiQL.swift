@@ -17,12 +17,7 @@ func safeSerialize(_ data: String?) -> String {
  * When shown, it will be pre-populated with the result of having executed the
  * requested query.
  */
-func renderGraphiQL(
-    query: String?,
-    variables: [String: GraphQL.Map]?,
-    operationName: String?,
-    result: GraphQL.Map?
-    ) -> String {
+func renderGraphiQL(query: String?, variables: [String: GraphQL.Map]?, operationName: String?, result: GraphQL.Map?) -> String {
     let variablesString = variables.map({ GraphQL.Map.dictionary($0).description })
     let resultString = result.map({ $0.description })
 
