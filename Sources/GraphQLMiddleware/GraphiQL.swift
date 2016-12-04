@@ -4,7 +4,7 @@ import Graphiti
 // Ensures string values are safe to be used within a <script> tag.
 func safeSerialize(_ data: String?) -> String {
     //return data ? JSON.stringify(data).replace(/\//g, '\\/') : null;
-    return data ?? "null"
+    return data ?? "undefined"
 }
 
 
