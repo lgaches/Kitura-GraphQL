@@ -94,7 +94,7 @@ public class GraphQLMiddleware<Root>: RouterMiddleware {
             }
             
         default:
-            response.headers.append("",value: "")
+            response.headers.append("Allow",value: "GET, POST")
             response.status(.methodNotAllowed)
             try response.end()
         }
