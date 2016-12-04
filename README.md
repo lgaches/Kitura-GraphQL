@@ -1,7 +1,10 @@
 # Kitura GraphQL
 
 [![Swift][swift-badge]][swift-url]
+![macOS](https://img.shields.io/badge/os-macOS-green.svg?style=flat)
+![Linux](https://img.shields.io/badge/os-linux-green.svg?style=flat)
 [![License][mit-badge]][mit-url]
+[![Build Status](https://travis-ci.org/lgaches/Kitura-GraphQL.svg?branch=master)](https://travis-ci.org/lgaches/Kitura-GraphQL)
 [![Codebeat][codebeat-badge]][codebeat-url]
 
 Create a GraphQL HTTP server with [Kitura](http://www.kitura.io) web framework.
