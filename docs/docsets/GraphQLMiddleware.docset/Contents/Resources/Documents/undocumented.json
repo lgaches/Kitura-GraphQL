@@ -1,0 +1,26 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/laurent/Developer/Binimo/Kitura-GraphQL/Sources/GraphQLMiddleware/GraphQLMiddleware.swift",
+      "line": 40,
+      "symbol": "noRootValue",
+      "symbol_kind": "source.lang.swift.decl.var.global",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/laurent/Developer/Binimo/Kitura-GraphQL/Sources/GraphQLMiddleware/GraphQLMiddleware.swift",
+      "line": 42,
+      "symbol": "GraphQLMiddleware",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/laurent/Developer/Binimo/Kitura-GraphQL/Sources/GraphQLMiddleware/GraphQLMiddleware.swift",
+      "line": 49,
+      "symbol": "GraphQLMiddleware.init(schema:showGraphiQL:rootValue:contextValue:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/laurent/Developer/Binimo/Kitura-GraphQL"
+}
