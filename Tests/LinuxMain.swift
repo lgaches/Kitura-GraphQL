@@ -1,6 +1,6 @@
 import XCTest
-@testable import Kitura_GraphQLTests
+@testable import GraphQLMiddlewareTests
 
 XCTMain([
-     testCase(Kitura_GraphQLTests.allTests),
+     testCase(GraphQLMiddlewareTests.allTests),
 ])

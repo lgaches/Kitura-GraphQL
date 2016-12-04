@@ -23,8 +23,8 @@ let schema = try! Schema<Void> { schema in
 
 
 
-class Kitura_GraphQLTests: XCTestCase {
-    let router = Kitura_GraphQLTests.setupRouter()
+class GraphQLMiddlewareTests: XCTestCase {
+    let router = GraphQLMiddlewareTests.setupRouter()
 
     override func tearDown() {
         doTearDown()
@@ -73,7 +73,7 @@ class Kitura_GraphQLTests: XCTestCase {
         return router
     }
 
-    static var allTests : [(String, (Kitura_GraphQLTests) -> () throws -> Void)] {
+    static var allTests : [(String, (GraphQLMiddlewareTests) -> () throws -> Void)] {
         return [
             ("testExample", testExample),
         ]
