@@ -1,4 +1,4 @@
-module: Kitura-GraphQL
+module: GraphQLMiddleware
 author: Laurent Gaches
 github_url: https://github.com/lgaches/Kitura-GraphQL/
 
