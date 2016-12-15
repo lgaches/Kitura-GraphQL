@@ -2,7 +2,7 @@ import XCTest
 import Graphiti
 import Kitura
 import KituraNet
-
+import SwiftyJSON
 
 @testable import GraphQLMiddleware
 
@@ -30,31 +30,73 @@ class GraphQLMiddlewareTests: XCTestCase {
         doTearDown()
     }
 
-    func testExample() {
+    func testGraphiQL() {
         performServerTest(router) { expectation in
 
-            
-
             self.performRequest("get", path: "/graphql", callback: { response in
-                XCTAssertNotNil(response, "Response object was nil")
-                //response?.headers[""]
-                do {
-                    let responseString = try response!.readString()
 
-                    XCTAssertNotNil(responseString)
+                guard let response = response else {
+                    XCTFail("ClientRequest response object was nil")
+                    expectation.fulfill()
+                    return
+                }
+
+                do {
+                    guard let body = try response.readString() else {
+                        XCTFail("body in response is nil")
+                        expectation.fulfill()
+                        return
+                    }
+
+                    if body.range(of: "<!DOCTYPE html>") == nil || body.range(of: "GraphiQL") == nil {
+                        XCTFail("No GraphiQL ")
+                    }
+                    XCTAssertNotNil(body)
                 } catch {
-                    XCTFail("Can't read response body")
+                    XCTFail("No response body")
                 }
 
                 expectation.fulfill()
             })
 
 
-            self.performRequest("post", path: "/graphql", callback: { response in
-                
-            })
         }
 
+    }
+
+    func testGraphqlQuery() {
+
+        performServerTest(router) { expectation in
+            self.performRequest("post", path: "/graphql", callback: { response in
+                guard let response = response else {
+                    XCTFail("ClientRequest response object was nil")
+                    expectation.fulfill()
+                    return
+                }
+
+                do {
+                    guard let body = try response.readString() else {
+                        XCTFail("body in response is nil")
+                        expectation.fulfill()
+                        return
+                    }                    
+                    let returnedJSON = JSON.parse(string: body)
+                    XCTAssertEqual(returnedJSON, JSON(["data":["hello":"world"]]))
+                } catch {
+                    XCTFail("No response body")
+                }
+                expectation.fulfill()
+            }, headers: ["Content-Type": "application/json"], requestModifier: { request in
+                do {
+                    let jsonToTest = JSON(["query": "{ hello }"])
+                    let jsonData = try jsonToTest.rawData()
+                    request.write(from: jsonData)
+                    request.write(from: "\n")
+                } catch {
+                    XCTFail("caught error \(error)")
+                }
+            })
+        }
     }
 
     static func setupRouter() -> Router {
@@ -75,7 +117,8 @@ class GraphQLMiddlewareTests: XCTestCase {
 
     static var allTests : [(String, (GraphQLMiddlewareTests) -> () throws -> Void)] {
         return [
-            ("testExample", testExample),
+            ("testGraphiQL", testGraphiQL),
+            ("testGraphqlQuery", testGraphqlQuery)
         ]
     }
 }
