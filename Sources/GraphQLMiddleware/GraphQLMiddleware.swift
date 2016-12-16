@@ -39,18 +39,18 @@ struct GraphQLRequestParams {
 
 public let noRootValue: Void = Void()
 
-public class GraphQLMiddleware<Root>: RouterMiddleware {
+public class GraphQLMiddleware<Root, Context>: RouterMiddleware {
 
-    let schema: Schema<Root>
+    let schema: Schema<Root, Context>
     let showGraphiQL: Bool
     let rootValue: Root
-    let contextValue: Any?
+    let context: Context?
 
-    public init(schema: Schema<Root>, showGraphiQL: Bool, rootValue: Root, contextValue: Any? = nil) {
+    public init(schema: Schema<Root, Context>, showGraphiQL: Bool, rootValue: Root, context: Context? = nil) {
         self.schema = schema
         self.showGraphiQL = showGraphiQL
         self.rootValue = rootValue
-        self.contextValue = contextValue
+        self.context = context
     }
 
     /// Handle an incoming HTTP request.
@@ -111,7 +111,7 @@ public class GraphQLMiddleware<Root>: RouterMiddleware {
 
 
         do {
-            let result = try self.schema.execute(request: query, rootValue: rootValue, contextValue: contextValue ?? request, variableValues: params.variables, operationName: params.operationName)
+            let result = try self.schema.execute(request: query, rootValue: rootValue, context: context ?? request as! Context, variables: params.variables, operationName: params.operationName)
             response.headers.append("Content-Type", value: "application/json")
             try response.send(json: convert(map: result)).end()
         } catch let error {

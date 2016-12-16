@@ -13,8 +13,8 @@ import SwiftyJSON
     import Darwin
 #endif
 
-let schema = try! Schema<Void> { schema in
-    schema.query = try ObjectType(name: "RootQueryType") { query in
+let schema = try! Schema<NoRoot, RouterRequest> { schema in
+    try schema.query { query in
         try query.field(name: "hello", type: String.self) { _ in
             "world"
         }

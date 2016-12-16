@@ -21,6 +21,8 @@ import XCTest
 import Foundation
 import Dispatch
 
+let serverPort = 7070
+
 protocol KituraTest {
     func expectation(_ index: Int) -> XCTestExpectation
     func waitExpectation(timeout t: TimeInterval, handler: XCWaitCompletionHandler?)
@@ -34,7 +36,7 @@ extension KituraTest {
 
     func performServerTest(_ router: ServerDelegate, asyncTasks: @escaping (XCTestExpectation) -> Void...) {
         do {
-            let server = try HTTPServer.listen(on: 8090, delegate: router)
+            let server = try HTTPServer.listen(on: serverPort, delegate: router)
             let requestQueue = DispatchQueue(label: "Request queue")
 
             for (index, asyncTask) in asyncTasks.enumerated() {
@@ -63,7 +65,7 @@ extension KituraTest {
         }
         allHeaders["Content-Type"] = "text/plain"
         let options: [ClientRequest.Options] =
-                [.method(method), .hostname("localhost"), .port(8090), .path(path), .headers(allHeaders)]
+                [.method(method), .hostname("localhost"), .port(Int16(serverPort)), .path(path), .headers(allHeaders)]
         let req = HTTP.request(options, callback: callback)        
         if let requestModifier = requestModifier {
             requestModifier(req)
