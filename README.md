@@ -16,7 +16,7 @@ import PackageDescription
 
 let package = Package(
     dependencies: [
-        .Package(url: "https://github.com/lgaches/Kitura-GraphQL.git", majorVersion: 0, minor: 1),
+        .Package(url: "https://github.com/lgaches/Kitura-GraphQL.git", majorVersion: 0, minor: 0),
     ]
 )
 ```
