@@ -20,7 +20,7 @@
         <a class="header-link" href="../index.html">
           GraphQLMiddleware Docs
         </a>
-         (25% documented)
+         (75% documented)
       </p>
     
         <p class="header-col header-col--secondary">
@@ -64,7 +64,13 @@
         <section class="section">
           <div class="section-content">
             <h1>GraphQLMiddleware</h1>
-            <p>Undocumented</p>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">GraphQLMiddleware</span><span class="o">&lt;</span><span class="kt">Root</span><span class="p">,</span> <span class="kt">Context</span><span class="o">&gt;</span><span class="p">:</span> <span class="kt">RouterMiddleware</span></code></pre>
+
+                </div>
+              </div>
+            <p>Kitura GraphQL Middleware</p>
 
           </div>
         </section>
@@ -76,9 +82,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC17GraphQLMiddleware17GraphQLMiddlewarecFT6schemaGV8Graphiti6Schemax_12showGraphiQLSb9rootValuex12contextValueGSqP___GS0_x_"></a>
-                    <a name="//apple_ref/swift/Method/init(schema:showGraphiQL:rootValue:contextValue:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC17GraphQLMiddleware17GraphQLMiddlewarecFT6schemaGV8Graphiti6Schemax_12showGraphiQLSb9rootValuex12contextValueGSqP___GS0_x_">init(schema:showGraphiQL:rootValue:contextValue:)</a>
+                    <a name="/s:FC17GraphQLMiddleware17GraphQLMiddlewarecFT6schemaGV8Graphiti6Schemaxq__12showGraphiQLSb9rootValuex7contextGSqq___GS0_xq__"></a>
+                    <a name="//apple_ref/swift/Method/init(schema:showGraphiQL:rootValue:context:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC17GraphQLMiddleware17GraphQLMiddlewarecFT6schemaGV8Graphiti6Schemaxq__12showGraphiQLSb9rootValuex7contextGSqq___GS0_xq__">init(schema:showGraphiQL:rootValue:context:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -86,8 +92,86 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Init Kitura GraphQL Middleware</p>
 
+<ul>
+<li>Parameters:
+
+<ul>
+<li>schema: A <code>Schema</code> instance from <a href="https://github.com/GraphQLSwift/Graphiti">Graphiti</a>. A <code>Schema</code> <em>must</em> be provided.</li>
+<li>showGraphiQL:If <code>true</code>, presentss <a href="https://github.com/graphql/graphiql">GraphiQL</a> when the GraphQL endpoint is loaded in a browser. We recommend that you set <code>showGraphiQL</code> to <code>true</code> when your app is in development because it&rsquo;s quite useful. You may or may not want it in production.</li>
+<li>rootValue: A value to pass as the <code>rootValue</code> to the schema&rsquo;s <code>execute</code> function from <a href="https://github.com/GraphQLSwift/Graphiti">Graphiti</a>.</li>
+<li>context: A value to pass as the <code>context</code> to the schema&rsquo;s <code>execute</code> function from <a href="https://github.com/GraphQLSwift/Graphiti">Graphiti</a>. If <code>context</code> is not provided, the <code>RouterRequest</code> struct is passed as the context.</li>
+</ul></li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">schema</span><span class="p">:</span> <span class="kt">Schema</span><span class="o">&lt;</span><span class="kt">Root</span><span class="p">,</span> <span class="kt">Context</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">showGraphiQL</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">rootValue</span><span class="p">:</span> <span class="kt">Root</span><span class="p">,</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">Context</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>schema</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A <code>Schema</code> instance from . A <code>Schema</code>  be provided.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>showGraphiQL</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If <code>true</code>, presentss  when the GraphQL endpoint is loaded in a browser. We recommend that you set <code>showGraphiQL</code> to <code>true</code> when your app is in development because it’s quite useful. You may or may not want it in production.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>rootValue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A value to pass as the <code>rootValue</code> to the schema’s <code>execute</code> function from .</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A value to pass as the <code>context</code> to the schema’s <code>execute</code> function from . If <code>context</code> is not provided, the <code>RouterRequest</code> struct is passed as the context.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -202,7 +286,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">Laurent Gaches</a>. All rights reserved. (Last updated: 2016-12-04)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">Laurent Gaches</a>. All rights reserved. (Last updated: 2016-12-16)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

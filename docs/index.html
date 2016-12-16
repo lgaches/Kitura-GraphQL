@@ -19,7 +19,7 @@
         <a class="header-link" href="index.html">
           GraphQLMiddleware Docs
         </a>
-         (25% documented)
+         (75% documented)
       </p>
     
         <p class="header-col header-col--secondary">
@@ -66,7 +66,10 @@
             <a href='#kitura-graphql' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='kitura-graphql'>Kitura GraphQL</h1>
 
 <p><a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-3.0.1-orange.svg?style=flat" alt="Swift"></a>
+<img src="https://img.shields.io/badge/os-macOS-green.svg?style=flat" alt="macOS">
+<img src="https://img.shields.io/badge/os-linux-green.svg?style=flat" alt="Linux">
 <a href="https://tldrlegal.com/license/mit-license"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat" alt="License"></a>
+<a href="https://travis-ci.org/lgaches/Kitura-GraphQL"><img src="https://travis-ci.org/lgaches/Kitura-GraphQL.svg?branch=master" alt="Build Status"></a>
 <a href="https://codebeat.co/projects/github-com-lgaches-kitura-graphql"><img src="https://codebeat.co/badges/7871a224-095f-4c39-b5fb-bfa6320cdadd" alt="Codebeat"></a></p>
 
 <p>Create a GraphQL HTTP server with <a href="http://www.kitura.io">Kitura</a> web framework.</p>
@@ -82,11 +85,14 @@
 <a href='#usage' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='usage'>Usage</h2>
 <a href='#configuration' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='configuration'>Configuration</h3>
 
-<p><code>GraphQLMiddleware</code> has the following parameters:
-- <strong><code>schema</code></strong>: A <code>Schema</code> instance from <a href="https://github.com/GraphQLSwift/Graphiti"><code>Graphiti</code></a>. A <code>Schema</code> <em>must</em> be provided.
-- <strong><code>showGraphiQL</code></strong>: If <code>true</code>, presentss <a href="https://github.com/graphql/graphiql">GraphiQL</a> when the GraphQL endpoint is loaded in a browser. We recommend that you set <code>showGraphiQL</code> to <code>true</code> when your app is in development because it&rsquo;s quite useful. You may or may not want it in production. 
-- <strong><code>rootValue</code></strong>: A value to pass as the <code>rootValue</code> to the schema&rsquo;s <code>execute</code> function from <a href="https://github.com/GraphQLSwift/Graphiti"><code>Graphiti</code></a>.
-- <strong><code>contextValue</code></strong>: A value to pass as the <code>contextValue</code> to the schema&rsquo;s <code>execute</code> function from <a href="https://github.com/GraphQLSwift/Graphiti"><code>Graphiti</code></a>. If <code>context</code> is not provided, the <code>request</code> struct is passed as the context.</p>
+<p><code>GraphQLMiddleware</code> has the following parameters:</p>
+
+<ul>
+<li><strong><code>schema</code></strong>: A <code>Schema</code> instance from <a href="https://github.com/GraphQLSwift/Graphiti"><code>Graphiti</code></a>. A <code>Schema</code> <em>must</em> be provided.</li>
+<li><strong><code>showGraphiQL</code></strong>: If <code>true</code>, presentss <a href="https://github.com/graphql/graphiql">GraphiQL</a> when the GraphQL endpoint is loaded in a browser. We recommend that you set <code>showGraphiQL</code> to <code>true</code> when your app is in development because it&rsquo;s quite useful. You may or may not want it in production.</li>
+<li><strong><code>rootValue</code></strong>: A value to pass as the <code>rootValue</code> to the schema&rsquo;s <code>execute</code> function from <a href="https://github.com/GraphQLSwift/Graphiti"><code>Graphiti</code></a>.</li>
+<li><strong><code>context</code></strong>: A value to pass as the <code>context</code> to the schema&rsquo;s <code>execute</code> function from <a href="https://github.com/GraphQLSwift/Graphiti"><code>Graphiti</code></a>. If <code>context</code> is not provided, the <code>RouterRequest</code> struct is passed as the context.</li>
+</ul>
 <a href='#http-usage' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='http-usage'>HTTP Usage</h3>
 
 <p>Once installed as a middleware at a path, <code>GraphQLMiddleware</code> will accept requests with the parameters:</p>
@@ -102,7 +108,7 @@
 <span class="kd">import</span> <span class="kt">Kitura</span>
 <span class="kd">import</span> <span class="kt">GraphQLMiddleware</span>
 
-<span class="k">let</span> <span class="nv">schema</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">Schema</span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span> <span class="p">{</span> <span class="n">schema</span> <span class="k">in</span>
+<span class="k">let</span> <span class="nv">schema</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">Schema</span><span class="o">&lt;</span><span class="kt">NoRoot</span><span class="p">,</span> <span class="kt">RouterRequest</span><span class="o">&gt;</span> <span class="p">{</span> <span class="n">schema</span> <span class="k">in</span>
     <span class="n">schema</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">ObjectType</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"RootQueryType"</span><span class="p">)</span> <span class="p">{</span> <span class="n">query</span> <span class="k">in</span>
         <span class="k">try</span> <span class="n">query</span><span class="o">.</span><span class="nf">field</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"hello"</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span>
             <span class="s">"world"</span>
@@ -133,7 +139,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">Laurent Gaches</a>. All rights reserved. (Last updated: 2016-12-04)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">Laurent Gaches</a>. All rights reserved. (Last updated: 2016-12-16)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

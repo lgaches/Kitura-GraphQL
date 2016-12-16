@@ -26,10 +26,11 @@ let package = Package(
 ### Configuration
 
 `GraphQLMiddleware` has the following parameters:
+
 - **`schema`**: A `Schema` instance from [`Graphiti`](https://github.com/GraphQLSwift/Graphiti). A `Schema` *must* be provided.
 - **`showGraphiQL`**: If `true`, presentss [GraphiQL](https://github.com/graphql/graphiql) when the GraphQL endpoint is loaded in a browser. We recommend that you set `showGraphiQL` to `true` when your app is in development because it's quite useful. You may or may not want it in production. 
 - **`rootValue`**: A value to pass as the `rootValue` to the schema's `execute` function from [`Graphiti`](https://github.com/GraphQLSwift/Graphiti).
-- **`contextValue`**: A value to pass as the `contextValue` to the schema's `execute` function from [`Graphiti`](https://github.com/GraphQLSwift/Graphiti). If `context` is not provided, the `request` struct is passed as the context.
+- **`context`**: A value to pass as the `context` to the schema's `execute` function from [`Graphiti`](https://github.com/GraphQLSwift/Graphiti). If `context` is not provided, the `RouterRequest` struct is passed as the context.
 
 ### HTTP Usage
 
@@ -49,7 +50,7 @@ import Graphiti
 import Kitura
 import GraphQLMiddleware
 
-let schema = try Schema<Void> { schema in
+let schema = try Schema<NoRoot, RouterRequest> { schema in
     schema.query = try ObjectType(name: "RootQueryType") { query in
         try query.field(name: "hello", type: String.self) { _ in
             "world"

@@ -39,6 +39,7 @@ struct GraphQLRequestParams {
 
 public let noRootValue: Void = Void()
 
+/// Kitura GraphQL Middleware
 public class GraphQLMiddleware<Root, Context>: RouterMiddleware {
 
     let schema: Schema<Root, Context>
@@ -46,6 +47,13 @@ public class GraphQLMiddleware<Root, Context>: RouterMiddleware {
     let rootValue: Root
     let context: Context?
 
+    /// Init Kitura GraphQL Middleware
+    ///
+    /// - Parameters:
+    ///   - schema: A `Schema` instance from [Graphiti](https://github.com/GraphQLSwift/Graphiti). A `Schema` *must* be provided.
+    ///   - showGraphiQL:If `true`, presentss [GraphiQL](https://github.com/graphql/graphiql) when the GraphQL endpoint is loaded in a browser. We recommend that you set `showGraphiQL` to `true` when your app is in development because it's quite useful. You may or may not want it in production.
+    ///   - rootValue: A value to pass as the `rootValue` to the schema's `execute` function from [Graphiti](https://github.com/GraphQLSwift/Graphiti).
+    ///   - context: A value to pass as the `context` to the schema's `execute` function from [Graphiti](https://github.com/GraphQLSwift/Graphiti). If `context` is not provided, the `RouterRequest` struct is passed as the context.
     public init(schema: Schema<Root, Context>, showGraphiQL: Bool, rootValue: Root, context: Context? = nil) {
         self.schema = schema
         self.showGraphiQL = showGraphiQL
