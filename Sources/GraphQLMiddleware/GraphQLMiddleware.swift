@@ -53,7 +53,7 @@ public class GraphQLMiddleware<Root, Context>: RouterMiddleware {
     ///   - schema: A `Schema` instance from [Graphiti](https://github.com/GraphQLSwift/Graphiti). A `Schema` *must* be provided.
     ///   - showGraphiQL:If `true`, presentss [GraphiQL](https://github.com/graphql/graphiql) when the GraphQL endpoint is loaded in a browser. We recommend that you set `showGraphiQL` to `true` when your app is in development because it's quite useful. You may or may not want it in production.
     ///   - rootValue: A value to pass as the `rootValue` to the schema's `execute` function from [Graphiti](https://github.com/GraphQLSwift/Graphiti).
-    ///   - context: A value to pass as the `context` to the schema's `execute` function from [Graphiti](https://github.com/GraphQLSwift/Graphiti). If `context` is not provided, the `RouterRequest` struct is passed as the context.
+    ///   - context: A value to pass as the `context` to the schema's `execute` function from [Graphiti](https://github.com/GraphQLSwift/Graphiti). 
     public init(schema: Schema<Root, Context>, showGraphiQL: Bool, rootValue: Root, context: Context? = nil) {
         self.schema = schema
         self.showGraphiQL = showGraphiQL
@@ -119,7 +119,12 @@ public class GraphQLMiddleware<Root, Context>: RouterMiddleware {
 
 
         do {
-            let result = try self.schema.execute(request: query, rootValue: rootValue, context: context ?? request as! Context, variables: params.variables, operationName: params.operationName)
+            let result: Map
+            if let context = context {
+                result = try self.schema.execute(request: query, rootValue: rootValue, context: context, variables: params.variables, operationName: params.operationName)
+            } else {
+                result = try self.schema.execute(request: query, rootValue: rootValue, variables: params.variables, operationName: params.operationName)
+            }
             response.headers.append("Content-Type", value: "application/json")
             try response.send(json: convert(map: result)).end()
         } catch let error {
