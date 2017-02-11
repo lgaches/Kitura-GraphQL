@@ -126,7 +126,7 @@ public class GraphQLMiddleware<Root, Context>: RouterMiddleware {
                 result = try self.schema.execute(request: query, rootValue: rootValue, variables: params.variables, operationName: params.operationName)
             }
             response.headers.append("Content-Type", value: "application/json")
-            try response.send(json: convert(map: result)).end()
+            try response.send(result.description).end()
         } catch let error {
             try response.status(.badRequest).send(error.localizedDescription).end()
         }
@@ -209,7 +209,4 @@ public class GraphQLMiddleware<Root, Context>: RouterMiddleware {
         return GraphQL.Map.null
     }
 
-    func convert(map: GraphQL.Map) -> JSON {
-        return JSON.parse(string: map.description)
-    }
 }
