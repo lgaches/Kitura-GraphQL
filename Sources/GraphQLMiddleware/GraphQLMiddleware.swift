@@ -31,11 +31,7 @@ import Graphiti
 import LoggerAPI
 
 
-struct GraphQLRequestParams {
-    let query: String?
-    let operationName: String?
-    let variables:[String: GraphQL.Map]
-}
+
 
 public let noRootValue: Void = Void()
 
@@ -53,7 +49,7 @@ public class GraphQLMiddleware<Root, Context>: RouterMiddleware {
     ///   - schema: A `Schema` instance from [Graphiti](https://github.com/GraphQLSwift/Graphiti). A `Schema` *must* be provided.
     ///   - showGraphiQL:If `true`, presentss [GraphiQL](https://github.com/graphql/graphiql) when the GraphQL endpoint is loaded in a browser. We recommend that you set `showGraphiQL` to `true` when your app is in development because it's quite useful. You may or may not want it in production.
     ///   - rootValue: A value to pass as the `rootValue` to the schema's `execute` function from [Graphiti](https://github.com/GraphQLSwift/Graphiti).
-    ///   - context: A value to pass as the `context` to the schema's `execute` function from [Graphiti](https://github.com/GraphQLSwift/Graphiti). 
+    ///   - context: A value to pass as the `context` to the schema's `execute` function from [Graphiti](https://github.com/GraphQLSwift/Graphiti).
     public init(schema: Schema<Root, Context>, showGraphiQL: Bool, rootValue: Root, context: Context? = nil) {
         self.schema = schema
         self.showGraphiQL = showGraphiQL
@@ -75,7 +71,7 @@ public class GraphQLMiddleware<Root, Context>: RouterMiddleware {
     ///          and the user will get a response with a status code of 500.
     public func handle(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) throws {
 
-        let params = parseParams(request: request)
+        let params = GraphQLRequestParams(request: request)
 
         switch request.method {
         // GraphQL HTTP only supports GET and POST methods.
@@ -125,88 +121,12 @@ public class GraphQLMiddleware<Root, Context>: RouterMiddleware {
             } else {
                 result = try self.schema.execute(request: query, rootValue: rootValue, variables: params.variables, operationName: params.operationName)
             }
-            response.headers.append("Content-Type", value: "application/json")
-            try response.send(result.description).end()
+
+            try response.send(json: result.toJSON()).end()
         } catch let error {
+            print(error)
             try response.status(.badRequest).send(error.localizedDescription).end()
         }
-    }
-
-    func parseParams(request: RouterRequest) -> GraphQLRequestParams {
-
-        switch request.method {
-        case .get:
-            let query = request.queryParameters["query"]?.removingPercentEncoding
-            let operationName = request.queryParameters["operationName"]
-            let variables = parseVariables(varsString: request.queryParameters["variables"])
-
-            return GraphQLRequestParams(query: query, operationName: operationName, variables: variables)
-        case .post:
-            do {
-                let content = try request.readString() ?? ""
-                let json = JSON.parse(string: content)
-                
-                let query = json["query"].string
-                let operationName = json["operationName"].string
-                let variables = parseVariables(varsString: json["variables"].rawString())
-
-                return GraphQLRequestParams(query: query, operationName: operationName, variables: variables)
-            } catch {
-                return GraphQLRequestParams(query: nil, operationName: nil, variables: [:])
-            }
-        default:
-            return GraphQLRequestParams(query: nil, operationName: nil, variables: [:])
-        }
-
-    }
-
-    func parseVariables(varsString: String?) -> [String: GraphQL.Map]  {
-        guard let varsString = varsString else { return [:] }
-
-        let varJson = JSON.parse(string: varsString)
-
-        guard let vars = varJson.dictionary else { return [:] }
-
-        var newVariables: [String: GraphQL.Map] = [:]
-        for (key,value) in vars {
-            newVariables[key] = convert(json: value)
-        }
-
-        return newVariables
-
-    }
-
-    func convert(json: JSON) -> GraphQL.Map {
-        if let array = json.array {
-            return GraphQL.Map.array(array.map({convert(json: $0)}))
-        }
-
-        if let string = json.string {
-            return GraphQL.Map.string(string)
-        }
-
-        if let bool = json.bool {
-            return GraphQL.Map.bool(bool)
-        }
-
-        if let double = json.double {
-            return GraphQL.Map.double(double)
-        }
-
-        if let int = json.int {
-            return GraphQL.Map.int(int)
-        }
-
-        if let dictionary = json.dictionary {
-            var dict: [String: GraphQL.Map] = [:]
-            for (key,value) in dictionary {
-                dict[key] = convert(json: value)
-            }
-
-            return GraphQL.Map.dictionary(dict)
-        }
-
-        return GraphQL.Map.null
     }
 
 }
