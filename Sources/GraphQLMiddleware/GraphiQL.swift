@@ -1,7 +1,7 @@
 import Graphiti
 
 // Current latest version of GraphiQL.
-let graphiQLVersion = "0.8.0"
+let graphiQLVersion = "0.9.1"
 
 // Ensures string values are safe to be used within a <script> tag.
 func safeSerialize(_ data: String?) -> String {
@@ -43,8 +43,8 @@ func renderGraphiQL(query: String?, variables: [String: GraphQL.Map]?, operation
         "</style>\n" +
         "<link href=\"//cdn.jsdelivr.net/graphiql/\(graphiQLVersion)/graphiql.css\" rel=\"stylesheet\" />\n" +
         "    <script src=\"//cdn.jsdelivr.net/fetch/0.9.0/fetch.min.js\"></script>\n" +
-        "<script src=\"//cdn.jsdelivr.net/react/15.3.2/react.min.js\"></script>\n" +
-        "<script src=\"//cdn.jsdelivr.net/react/15.3.2/react-dom.min.js\"></script>\n" +
+        "<script src=\"//cdn.jsdelivr.net/react/15.4.2/react.min.js\"></script>\n" +
+        "<script src=\"//cdn.jsdelivr.net/react/15.4.2/react-dom.min.js\"></script>\n" +
         "<script src=\"//cdn.jsdelivr.net/graphiql/\(graphiQLVersion)/graphiql.min.js\"></script>\n" +
         "</head>\n" +
         "<body>\n" +
